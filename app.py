@@ -212,3 +212,20 @@ if last is not None:
         )
     _render_results(last)
     _render_export_actions(last)
+
+
+# ===================================================
+# ADD THIS TO THE ABSOLUTE BOTTOM OF YOUR APP.PY FILE
+# ===================================================
+import streamlit.web.cli as stcli
+import sys
+
+def handler(request, context):
+    """Gives Vercel the explicit handler entrypoint it requires to trigger Streamlit"""
+    sys.argv = ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+    stcli.main()
+
+# This ensures it can still be run locally using 'streamlit run app.py'
+if __name__ == "__main__":
+    sys.argv = ["streamlit", "run", "app.py"]
+    stcli.main()
