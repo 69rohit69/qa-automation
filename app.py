@@ -220,12 +220,16 @@ if last is not None:
 import streamlit.web.cli as stcli
 import sys
 
-def handler(request, context):
-    """Gives Vercel the explicit handler entrypoint it requires to trigger Streamlit"""
+def fallback_handler(request, context):
     sys.argv = ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
     stcli.main()
 
-# This ensures it can still be run locally using 'streamlit run app.py'
+# Explicit global assignments that Vercel's static parser cannot miss:
+app = fallback_handler
+application = fallback_handler
+handler = fallback_handler
+
+# Keeps local execution working via 'streamlit run app.py'
 if __name__ == "__main__":
     sys.argv = ["streamlit", "run", "app.py"]
     stcli.main()
