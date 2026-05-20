@@ -1,0 +1,11 @@
+.env
+.cache/
+credentials/*
+!credentials/.gitkeep
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+test_cases.csv
+.DS_Store
