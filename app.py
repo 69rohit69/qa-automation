@@ -213,23 +213,3 @@ if last is not None:
     _render_results(last)
     _render_export_actions(last)
 
-
-# ===================================================
-# ADD THIS TO THE ABSOLUTE BOTTOM OF YOUR APP.PY FILE
-# ===================================================
-import streamlit.web.cli as stcli
-import sys
-
-def fallback_handler(request, context):
-    sys.argv = ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
-    stcli.main()
-
-# Explicit global assignments that Vercel's static parser cannot miss:
-app = fallback_handler
-application = fallback_handler
-handler = fallback_handler
-
-# Keeps local execution working via 'streamlit run app.py'
-if __name__ == "__main__":
-    sys.argv = ["streamlit", "run", "app.py"]
-    stcli.main()
